@@ -1,0 +1,56 @@
+version: '3.9'
+
+services:
+  redis-master:
+    build:
+      context: ./tile-38-master
+      dockerfile: Dockerfile
+    container_name: "redis-master"
+    network_mode: "host"
+    command: [ "tile38-server", "-d", "/data", "--appendonly", "yes","-vv", "-p", "9851"]
+    
+  redis-slave1:
+    build:
+      context: ./tile-38-slave
+      dockerfile: Dockerfile
+    container_name: "redis-slave1"
+    network_mode: "host"
+    command: [ "tile38-server", "-d", "/data", "--appendonly", "yes","-vv", "-p", "9852"]
+
+  redis-slave2:
+    build:
+      context: ./tile-38-slave
+      dockerfile: Dockerfile
+    container_name: "redis-slave2"
+    network_mode: "host"
+    command: [ "tile38-server", "-d", "/data", "--appendonly", "yes","-vv", "-p", "9853"]
+
+  redis-sentinel1:
+    build:
+      context: ./sentinel
+      dockerfile: Dockerfile
+    container_name: "redis-sentinel1"
+    network_mode: "host"
+    environment:
+      - SENTINEL_PORT=5000
+    
+  redis-sentinel2:
+    build:
+      context: ./sentinel
+      dockerfile: Dockerfile
+    container_name: "redis-sentinel2"
+    network_mode: "host"
+    environment:
+      - SENTINEL_PORT=5001
+   
+
+  redis-sentinel3:
+    build:
+      context: ./sentinel
+      dockerfile: Dockerfile
+    container_name: "redis-sentinel3"
+    network_mode: "host"
+    environment:
+      - SENTINEL_PORT=5002
+   
+
