@@ -1,27 +1,27 @@
 version: '3.9'
 
 services:
-  redis-master:
+  tile38-1:
     build:
       context: ./tile-38-master
       dockerfile: Dockerfile
-    container_name: "redis-master"
+    container_name: "tile38-1"
     network_mode: "host"
     command: [ "tile38-server", "-d", "/data", "--appendonly", "yes","-vv", "-p", "9851"]
     
-  redis-slave1:
+  tile38-2:
     build:
       context: ./tile-38-slave
       dockerfile: Dockerfile
-    container_name: "redis-slave1"
+    container_name: "tile38-2"
     network_mode: "host"
     command: [ "tile38-server", "-d", "/data", "--appendonly", "yes","-vv", "-p", "9852"]
 
-  redis-slave2:
+  tile38-3:
     build:
       context: ./tile-38-slave
       dockerfile: Dockerfile
-    container_name: "redis-slave2"
+    container_name: "tile38-3"
     network_mode: "host"
     command: [ "tile38-server", "-d", "/data", "--appendonly", "yes","-vv", "-p", "9853"]
 
